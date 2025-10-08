@@ -1,0 +1,13 @@
+{
+    "name": "website-buttons",
+    "version": "1.0.0",
+    "description": "A customizable website with link buttons",
+    "main": "index.html",
+    "scripts": {
+        "build": "echo 'No build step required for static site'",
+        "deploy": "echo 'Deploy using Cloudflare Pages'"
+    },
+    "keywords": ["buttons", "links", "cloudflare"],
+    "author": "Your Name",
+    "license": "MIT"
+}
