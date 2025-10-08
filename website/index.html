@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blankboii - Home</title>
+    <link rel="icon" type="image/jpeg" href="https://i.imgur.com/h7E54if.jpeg">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #fff;
+            background: #000;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        #snowflakes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            color: #ff6b35;
+            font-size: 1em;
+            user-select: none;
+            opacity: 0.8;
+            animation: fall linear forwards;
+            text-shadow: 0 0 10px #ff6b35, 0 0 20px #ff6b35, 0 0 30px #ff6b35;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+        }
+
+        .name {
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 10px #ff6b35, 0 0 20px #ff6b35;
+            text-align: center;
+        }
+
+        .title {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            margin-bottom: 3rem;
+            color: #ccc;
+            text-align: center;
+        }
+
+        /* Navigation Buttons */
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, #ff6b35, #ff8e53);
+            color: white;
+            padding: 1.2rem 2.5rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            border: 2px solid #ff6b35;
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.6);
+            text-align: center;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 107, 53, 0.9);
+            background: linear-gradient(135deg, #ff8e53, #ff6b35);
+        }
+
+        .discord-status {
+            background: rgba(30, 30, 30, 0.9);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+            border: 1px solid #333;
+            backdrop-filter: blur(10px);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .status-title {
+            color: #ff6b35;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            text-shadow: 0 0 5px rgba(255, 107, 53, 0.5);
+        }
+
+        .discord-widget {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .discord-profile {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: rgba(40, 40, 40, 0.8);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid #444;
+        }
+
+        .discord-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid #ff6b35;
+        }
+
+        .discord-info {
+            text-align: left;
+            flex: 1;
+        }
+
+        .discord-username {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .discord-discriminator {
+            color: #888;
+            font-size: 1rem;
+        }
+
+        .discord-status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .status-online { background: #43b581; }
+        .status-idle { background: #faa61a; }
+        .status-dnd { background: #f04747; }
+        .status-offline { background: #747f8d; }
+
+        .activities-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .activity-section {
+            background: rgba(40, 40, 40, 0.8);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid #444;
+        }
+
+        .activity-type {
+            color: #ff6b35;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            text-transform: capitalize;
+        }
+
+        .activity-item {
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #333;
+        }
+
+        .activity-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .activity-name {
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .activity-details {
+            color: #ccc;
+            margin-bottom: 0.3rem;
+        }
+
+        .activity-state {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .spotify-progress {
+            margin-top: 1rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #333;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #ff6b35;
+            border-radius: 3px;
+            transition: width 1s linear;
+        }
+
+        .progress-time {
+            display: flex;
+            justify-content: space-between;
+            color: #888;
+            font-size: 0.8rem;
+        }
+
+        .no-activity {
+            color: #888;
+            font-style: italic;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .contact {
+            text-align: center;
+            background: rgba(44, 62, 80, 0.9);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid #444;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .contact a {
+            color: #ff6b35;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .contact a:hover {
+            color: #fff;
+            text-shadow: 0 0 10px #ff6b35;
+        }
+
+        .loading {
+            color: #ccc;
+            font-style: italic;
+        }
+
+        .activity-icon {
+            margin-right: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .name {
+                font-size: 3rem;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-btn {
+                width: 100%;
+                max-width: 300px;
+                text-align: center;
+            }
+            
+            .discord-profile {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="snowflakes"></div>
+
+    <div class="container">
+        <div class="header">
+            <h1 class="name">Blankboii</h1>
+            <p class="title">a computer intelligence student</p>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="nav-buttons">
+            <a href="https://blankboii.xyz" class="nav-btn">🏠 Home</a>
+            <a href="https://github.com/blankboii" class="nav-btn">💻 GitHub</a>
+            <a href="https://discord.com/users/1353737272989581436" class="nav-btn">💬 Discord</a>
+            <a href="/projects" class="nav-btn">🚀 Projects</a>
+            <a href="/contact" class="nav-btn">📧 Contact</a>
+            <a href="https://blankboii.xyz" class="nav-btn">🏠 Home</a>
+            <a href="https://blankboii.xyz" class="nav-btn">🏠 Home</a>
+            <a href="https://blankboii.xyz" class="nav-btn">🏠 Home</a>
+            <a href="https://blankboii.xyz" class="nav-btn">🏠 Home</a>
+            <a href="https://blankboii.xyz" class="nav-btn">🏠 Home</a>
+        </div>
+
+        <div class="discord-status">
+            <h2 class="status-title">Live Discord Status</h2>
+            <div class="discord-widget">
+                <div class="discord-profile">
+                    <img id="discord-avatar" src="" alt="Discord Avatar" class="discord-avatar">
+                    <div class="discord-info">
+                        <div class="discord-username" id="discord-username">Loading...</div>
+                        <div class="discord-discriminator" id="discord-discriminator">#0000</div>
+                        <div class="discord-status-indicator">
+                            <div class="status-dot" id="status-dot"></div>
+                            <span id="status-text">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="activities-container" id="activities-container">
+                    <div class="loading">Loading activities...</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact">
+            <h2>Get In Touch</h2>
+            <p style="margin-top: 1rem; color: #ccc;">Interested in working together? Reach out to me!</p>
+            <p style="margin-top: 0.5rem;">Email: <a href="mailto:your-email@domain.com">your-email@domain.com</a></p>
+        </div>
+    </div>
+
+    <script>
+        const DISCORD_ID = '1353737272989581436';
+
+        function createSnowflake() {
+            const snowflake = document.createElement('div');
+            snowflake.classList.add('snowflake');
+            snowflake.innerHTML = '❄';
+            snowflake.style.left = Math.random() * 100 + 'vw';
+            snowflake.style.animationDuration = Math.random() * 3 + 2 + 's';
+            snowflake.style.fontSize = Math.random() * 10 + 10 + 'px';
+            snowflake.style.opacity = Math.random() * 0.6 + 0.3;
+            
+            document.getElementById('snowflakes').appendChild(snowflake);
+            
+            setTimeout(() => {
+                snowflake.remove();
+            }, 5000);
+        }
+
+        function createSnowflakes() {
+            setInterval(createSnowflake, 100);
+        }
+
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function calculateSpotifyProgress(activity) {
+            if (!activity.timestamps) return null;
+            
+            const now = Date.now();
+            const start = activity.timestamps.start;
+            const end = activity.timestamps.end;
+            
+            if (!start || !end) return null;
+            
+            const totalDuration = end - start;
+            const currentProgress = now - start;
+            const progressPercent = (currentProgress / totalDuration) * 100;
+            
+            return {
+                current: formatTime(currentProgress / 1000),
+                total: formatTime(totalDuration / 1000),
+                percent: Math.min(100, Math.max(0, progressPercent))
+            };
+        }
+
+        function getActivityType(type) {
+            const types = {
+                0: 'playing',
+                1: 'streaming',
+                2: 'listening',
+                3: 'watching',
+                4: 'custom',
+                5: 'competing'
+            };
+            return types[type] || 'unknown';
+        }
+
+        function getActivityIcon(type) {
+            const icons = {
+                0: '🎮',
+                1: '📺',
+                2: '🎵',
+                3: '👀',
+                4: '💬',
+                5: '🏆'
+            };
+            return icons[type] || '📱';
+        }
+
+        async function fetchDiscordStatus() {
+            try {
+                const response = await fetch(`https://api.lanyard.rest/v1/users/${DISCORD_ID}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    const user = data.data;
+                    updateDiscordUI(user);
+                }
+            } catch (error) {
+                console.error('Error fetching Discord status:', error);
+                document.getElementById('discord-username').textContent = 'Error loading status';
+                document.getElementById('activities-container').innerHTML = '<div class="no-activity">Unable to fetch activities</div>';
+            }
+        }
+
+        function updateDiscordUI(user) {
+            document.getElementById('discord-avatar').src = 
+                `https://cdn.discordapp.com/avatars/${DISCORD_ID}/${user.discord_user.avatar}.png?size=256`;
+            document.getElementById('discord-username').textContent = 
+                user.discord_user.global_name || user.discord_user.username;
+            document.getElementById('discord-discriminator').textContent = 
+                `@${user.discord_user.username}`;
+
+            const statusDot = document.getElementById('status-dot');
+            const statusText = document.getElementById('status-text');
+            
+            statusDot.className = 'status-dot';
+            switch(user.discord_status) {
+                case 'online':
+                    statusDot.classList.add('status-online');
+                    statusText.textContent = 'Online';
+                    break;
+                case 'idle':
+                    statusDot.classList.add('status-idle');
+                    statusText.textContent = 'Idle';
+                    break;
+                case 'dnd':
+                    statusDot.classList.add('status-dnd');
+                    statusText.textContent = 'Do Not Disturb';
+                    break;
+                default:
+                    statusDot.classList.add('status-offline');
+                    statusText.textContent = 'Offline';
+            }
+
+            updateActivities(user.activities || []);
+        }
+
+        function updateActivities(activities) {
+            const container = document.getElementById('activities-container');
+            
+            if (activities.length === 0) {
+                container.innerHTML = '<div class="no-activity">No current activities</div>';
+                return;
+            }
+
+            let activitiesHTML = '';
+
+            activities.forEach(activity => {
+                const activityType = getActivityType(activity.type);
+                const activityIcon = getActivityIcon(activity.type);
+                
+                let activityContent = `
+                    <div class="activity-name">${activity.name}</div>
+                    ${activity.details ? `<div class="activity-details">${activity.details}</div>` : ''}
+                    ${activity.state ? `<div class="activity-state">${activity.state}</div>` : ''}
+                `;
+
+                if (activity.type === 2 && activity.timestamps) {
+                    const progress = calculateSpotifyProgress(activity);
+                    if (progress) {
+                        activityContent += `
+                            <div class="spotify-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: ${progress.percent}%"></div>
+                                </div>
+                                <div class="progress-time">
+                                    <span>${progress.current}</span>
+                                    <span>${progress.total}</span>
+                                </div>
+                            </div>
+                        `;
+                    }
+                }
+
+                activitiesHTML += `
+                    <div class="activity-section">
+                        <div class="activity-type">${activityIcon} ${activityType}</div>
+                        <div class="activity-item">
+                            ${activityContent}
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = activitiesHTML;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            createSnowflakes();
+            fetchDiscordStatus();
+            
+            setInterval(fetchDiscordStatus, 1000);
+        });
+    </script>
+</body>
+</html>
