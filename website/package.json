@@ -4,8 +4,7 @@
     "description": "A customizable website with link buttons",
     "main": "index.html",
     "scripts": {
-        "build": "echo 'No build step required for static site'",
-        "deploy": "echo 'Deploy using Cloudflare Pages'"
+        "build": "echo 'No build step required for static site'"
     },
     "keywords": ["buttons", "links", "cloudflare"],
     "author": "Your Name",
