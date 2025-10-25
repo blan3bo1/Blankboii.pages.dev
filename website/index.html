@@ -154,6 +154,7 @@
             justify-content: center;
             align-items: center;
             color: #666;
+            overflow: hidden;
         }
 
         .ad-content.leaderboard {
@@ -215,7 +216,7 @@
             margin-bottom: 1rem;
         }
 
-        /* Ad Blocker Popup - AdSense Compliant */
+        /* Ad Blocker Popup */
         #adblock-popup {
             position: fixed;
             top: 50%;
@@ -291,34 +292,6 @@
             border-color: #888;
         }
 
-        /* Content restriction overlay - AdSense compliant approach */
-        #content-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(5px);
-            z-index: 999;
-            display: none;
-            align-items: center;
-            justify-content: center;
-        }
-
-        #content-overlay.show {
-            display: flex;
-        }
-
-        .overlay-content {
-            background: rgba(30, 30, 30, 0.95);
-            border-radius: 12px;
-            padding: 2rem;
-            max-width: 400px;
-            text-align: center;
-            border: 2px solid #ff6b35;
-        }
-
         @media (max-width: 768px) {
             .name {
                 font-size: 3rem;
@@ -349,43 +322,16 @@
                 max-width: 280px;
                 margin: 0 1rem;
             }
-
-            .overlay-content {
-                margin: 1rem;
-                max-width: 320px;
-            }
         }
     </style>
 </head>
 <body>
-    <!-- Content Restriction Overlay (AdSense Compliant) -->
-    <div id="content-overlay">
-        <div class="overlay-content">
-            <h3 style="color: #ff6b35; margin-bottom: 1rem;">Support Our Website</h3>
-            <p style="color: #ccc; margin-bottom: 1.5rem; line-height: 1.4;">
-                We notice you're using an ad blocker. Advertising helps us provide free content.
-            </p>
-            <p style="color: #888; font-size: 0.9rem; margin-bottom: 1.5rem;">
-                You can continue to access our content by either:
-            </p>
-            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                <button class="popup-btn secondary" onclick="disableAdBlockMessage()">
-                    Continue with ads disabled
-                </button>
-                <button class="popup-btn primary" onclick="reloadWithoutAdBlock()">
-                    Reload and support us
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Ad Blocker Info Message (Non-intrusive) -->
+    <!-- Ad Blocker Popup -->
     <div id="adblock-popup">
-        <div class="popup-title">Support Our Content</div>
-        <div class="popup-text">Advertising revenue helps us keep this content free for everyone. Thank you for your support!</div>
+        <div class="popup-title">Ad Blocker Detected</div>
+        <div class="popup-text">Please consider disabling your ad blocker to support our website. Ads help us keep the content free.</div>
         <div class="popup-buttons">
-            <button class="popup-btn secondary" onclick="hideAdBlockPopup()">Dismiss</button>
-            <button class="popup-btn primary" onclick="learnMoreAboutAds()">Learn More</button>
+            <button class="popup-btn secondary" id="continue-btn">I don't care, continue</button>
         </div>
     </div>
 
@@ -397,16 +343,15 @@
             <div class="ad-banner">
                 <div class="ad-label">Advertisement</div>
                 <div class="ad-content leaderboard">
-                    <!-- Your Leaderboard Ad Code -->
-                    <ins class="adsbygoogle"
-                         style="display:block"
-                         data-ad-client="ca-pub-9040064366264076"
-                         data-ad-slot="8116644849"
-                         data-ad-format="auto"
-                         data-full-width-responsive="true"></ins>
-                    <script>
-                         (adsbygoogle = window.adsbygoogle || []).push({});
-                    </script>
+                    <!-- AMP Ad Code -->
+                    <amp-ad width="100vw" height="320"
+                        type="adsense"
+                        data-ad-client="ca-pub-9040064366264076"
+                        data-ad-slot="8116644849"
+                        data-auto-format="rspv"
+                        data-full-width="">
+                        <div overflow=""></div>
+                    </amp-ad>
                 </div>
             </div>
         </div>
@@ -427,16 +372,15 @@
             <div class="ad-banner">
                 <div class="ad-label">Advertisement</div>
                 <div class="ad-content rectangle">
-                    <!-- Your Rectangle Ad Code -->
-                    <ins class="adsbygoogle"
-                         style="display:block"
-                         data-ad-client="ca-pub-9040064366264076"
-                         data-ad-slot="1959905384"
-                         data-ad-format="auto"
-                         data-full-width-responsive="true"></ins>
-                    <script>
-                         (adsbygoogle = window.adsbygoogle || []).push({});
-                    </script>
+                    <!-- AMP Ad Code -->
+                    <amp-ad width="100vw" height="320"
+                        type="adsense"
+                        data-ad-client="ca-pub-9040064366264076"
+                        data-ad-slot="1959905384"
+                        data-auto-format="rspv"
+                        data-full-width="">
+                        <div overflow=""></div>
+                    </amp-ad>
                 </div>
             </div>
         </div>
@@ -453,16 +397,15 @@
             <div class="ad-banner">
                 <div class="ad-label">Advertisement</div>
                 <div class="ad-content leaderboard">
-                    <!-- Your Leaderboard Ad Code -->
-                    <ins class="adsbygoogle"
-                         style="display:block"
-                         data-ad-client="ca-pub-9040064366264076"
-                         data-ad-slot="8116644849"
-                         data-ad-format="auto"
-                         data-full-width-responsive="true"></ins>
-                    <script>
-                         (adsbygoogle = window.adsbygoogle || []).push({});
-                    </script>
+                    <!-- AMP Ad Code -->
+                    <amp-ad width="100vw" height="320"
+                        type="adsense"
+                        data-ad-client="ca-pub-9040064366264076"
+                        data-ad-slot="8116644849"
+                        data-auto-format="rspv"
+                        data-full-width="">
+                        <div overflow=""></div>
+                    </amp-ad>
                 </div>
             </div>
         </div>
@@ -494,40 +437,48 @@
             setInterval(createSnowflake, 100);
         }
 
-        // Ad Blocker Detection - AdSense Compliant Approach
+        // Improved Ad Blocker Detection
         function detectAdBlock() {
-            // Create a test ad element
-            const testAd = document.createElement('div');
-            testAd.innerHTML = '&nbsp;';
-            testAd.className = 'adsbox';
-            testAd.style.position = 'absolute';
-            testAd.style.left = '-999px';
-            testAd.style.top = '-999px';
-            testAd.style.width = '1px';
-            testAd.style.height = '1px';
-            document.body.appendChild(testAd);
+            // Multiple detection methods
+            let adBlockDetected = false;
             
-            setTimeout(() => {
-                const isBlocked = testAd.offsetHeight === 0 || 
-                                 testAd.offsetWidth === 0;
-                
-                document.body.removeChild(testAd);
-                
-                if (isBlocked) {
-                    // Show non-intrusive message after delay
-                    setTimeout(showAdBlockMessage, 2000);
-                }
-            }, 100);
+            // Method 1: Check if AMP ads are blocked
+            const ampAds = document.querySelectorAll('amp-ad');
+            if (ampAds.length > 0) {
+                setTimeout(() => {
+                    ampAds.forEach(ad => {
+                        if (ad.offsetHeight === 0 || ad.offsetWidth === 0) {
+                            adBlockDetected = true;
+                        }
+                    });
+                    if (adBlockDetected) {
+                        showAdBlockPopup();
+                    }
+                }, 2000);
+            }
+            
+            // Method 2: Try to load Google Analytics (often blocked by ad blockers)
+            const gaScript = document.createElement('script');
+            gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-TEST';
+            gaScript.onerror = function() {
+                adBlockDetected = true;
+                showAdBlockPopup();
+            };
+            document.head.appendChild(gaScript);
+            
+            // Method 3: Check for blocked requests
+            fetch('https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js', { 
+                method: 'HEAD', 
+                mode: 'no-cors'
+            }).catch(() => {
+                adBlockDetected = true;
+                showAdBlockPopup();
+            });
         }
 
-        function showAdBlockMessage() {
+        function showAdBlockPopup() {
             const popup = document.getElementById('adblock-popup');
             popup.classList.add('show');
-            
-            // Auto-hide after 8 seconds (AdSense compliant - not persistent)
-            setTimeout(() => {
-                popup.classList.remove('show');
-            }, 8000);
         }
 
         function hideAdBlockPopup() {
@@ -535,54 +486,14 @@
             popup.classList.remove('show');
         }
 
-        function learnMoreAboutAds() {
-            hideAdBlockPopup();
-            // Open educational content in new tab
-            window.open('https://support.google.com/adsense/answer/48182', '_blank');
-        }
-
-        // AdSense compliant content restriction (not enabled by default)
-        function showContentRestriction() {
-            const overlay = document.getElementById('content-overlay');
-            overlay.classList.add('show');
-        }
-
-        function disableAdBlockMessage() {
-            const overlay = document.getElementById('content-overlay');
-            overlay.classList.remove('show');
-            // Set cookie to not show again for 24 hours
-            document.cookie = "adblockMessageDisabled=true; max-age=86400; path=/";
-        }
-
-        function reloadWithoutAdBlock() {
-            location.reload();
-        }
-
-        // Check if user has previously dismissed the message
-        function hasDismissedMessage() {
-            return document.cookie.includes('adblockMessageDisabled=true');
-        }
-
         document.addEventListener('DOMContentLoaded', function() {
             createSnowflakes();
             
-            // Detect ad blocker after page loads (with delay)
-            setTimeout(() => {
-                if (!hasDismissedMessage()) {
-                    detectAdBlock();
-                }
-            }, 1500);
-        });
-
-        // AdSense compliance: Ensure ads are visible and not obstructed
-        window.addEventListener('load', function() {
-            // Check if ads are loading properly
-            const adElements = document.querySelectorAll('ins.adsbygoogle');
-            adElements.forEach(ad => {
-                if (ad.offsetHeight === 0 || ad.offsetWidth === 0) {
-                    console.log('Ad may be blocked or not loading properly');
-                }
-            });
+            // Detect ad blocker after page loads
+            setTimeout(detectAdBlock, 1000);
+            
+            // Continue button event
+            document.getElementById('continue-btn').addEventListener('click', hideAdBlockPopup);
         });
     </script>
 </body>
