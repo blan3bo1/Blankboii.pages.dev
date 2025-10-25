@@ -217,6 +217,95 @@
             margin-bottom: 1rem;
         }
 
+        /* Consent Banner */
+        #consent-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(30, 30, 30, 0.95);
+            border-top: 2px solid #ff6b35;
+            padding: 1.5rem;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .consent-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .consent-text {
+            color: #ccc;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            text-align: center;
+        }
+
+        .consent-text a {
+            color: #ff6b35;
+            text-decoration: none;
+        }
+
+        .consent-text a:hover {
+            text-decoration: underline;
+        }
+
+        .consent-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .consent-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            min-width: 120px;
+        }
+
+        .consent-btn.accept {
+            background: linear-gradient(135deg, #ff6b35, #ff8e53);
+            color: white;
+        }
+
+        .consent-btn.reject {
+            background: transparent;
+            color: #888;
+            border: 1px solid #555;
+        }
+
+        .consent-btn.settings {
+            background: transparent;
+            color: #ff6b35;
+            border: 1px solid #ff6b35;
+        }
+
+        .consent-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .consent-btn.accept:hover {
+            box-shadow: 0 0 15px rgba(255, 107, 53, 0.7);
+        }
+
+        .consent-btn.reject:hover {
+            color: #fff;
+            border-color: #888;
+        }
+
+        .consent-btn.settings:hover {
+            background: rgba(255, 107, 53, 0.1);
+        }
+
         /* Ad Blocker Popup */
         #adblock-popup {
             position: fixed;
@@ -228,7 +317,7 @@
             border-radius: 12px;
             padding: 1.5rem;
             box-shadow: 0 0 30px rgba(255, 107, 53, 0.5);
-            z-index: 1000;
+            z-index: 1001;
             max-width: 300px;
             text-align: center;
             backdrop-filter: blur(10px);
@@ -323,10 +412,40 @@
                 max-width: 280px;
                 margin: 0 1rem;
             }
+
+            .consent-content {
+                padding: 0 1rem;
+            }
+
+            .consent-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .consent-btn {
+                width: 100%;
+                max-width: 200px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Consent Banner -->
+    <div id="consent-banner">
+        <div class="consent-content">
+            <div class="consent-text">
+                We use cookies and similar technologies to provide and improve our services, personalize content, and analyze traffic. 
+                By clicking "Accept All", you consent to the use of these technologies and the processing of your personal data for these purposes. 
+                <a href="#" onclick="showPrivacySettings()">Learn more</a>
+            </div>
+            <div class="consent-buttons">
+                <button class="consent-btn accept" onclick="acceptAllConsent()">Accept All</button>
+                <button class="consent-btn reject" onclick="rejectAllConsent()">Reject All</button>
+                <button class="consent-btn settings" onclick="showPrivacySettings()">Privacy Settings</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Ad Blocker Popup -->
     <div id="adblock-popup">
         <div class="popup-title">Ad Blocker Detected</div>
@@ -343,7 +462,7 @@
         <div class="ad-container">
             <div class="ad-banner">
                 <div class="ad-label">Advertisement</div>
-                <div class="ad-content leaderboard">
+                <div class="ad-content leaderboard" id="leaderboard-ad">
                     <!-- Leaderboard Ad Code -->
                     <ins class="adsbygoogle"
                          style="display:block"
@@ -373,7 +492,7 @@
         <div class="ad-container">
             <div class="ad-banner">
                 <div class="ad-label">Advertisement</div>
-                <div class="ad-content rectangle">
+                <div class="ad-content rectangle" id="rectangle-ad">
                     <!-- Rectangle Ad Code -->
                     <ins class="adsbygoogle"
                          style="display:block"
@@ -399,7 +518,7 @@
         <div class="ad-container">
             <div class="ad-banner">
                 <div class="ad-label">Advertisement</div>
-                <div class="ad-content leaderboard">
+                <div class="ad-content leaderboard" id="footer-ad">
                     <!-- Leaderboard Ad Code -->
                     <ins class="adsbygoogle"
                          style="display:block"
@@ -421,6 +540,83 @@
     </div>
 
     <script>
+        // Consent Management
+        let consentGiven = false;
+        let adsEnabled = false;
+
+        function acceptAllConsent() {
+            consentGiven = true;
+            adsEnabled = true;
+            hideConsentBanner();
+            enableAds();
+            setConsentCookie('accepted');
+        }
+
+        function rejectAllConsent() {
+            consentGiven = true;
+            adsEnabled = false;
+            hideConsentBanner();
+            disableAds();
+            setConsentCookie('rejected');
+        }
+
+        function showPrivacySettings() {
+            alert('Privacy Settings:\n\nWe use Google AdSense to display ads. These ads may use cookies to personalize content and measure ad performance.\n\nYou can manage your preferences through your browser settings or by visiting Google\'s Ads Settings.');
+        }
+
+        function hideConsentBanner() {
+            document.getElementById('consent-banner').style.display = 'none';
+        }
+
+        function setConsentCookie(choice) {
+            const date = new Date();
+            date.setFullYear(date.getFullYear() + 1);
+            document.cookie = `consent=${choice}; expires=${date.toUTCString()}; path=/; SameSite=Lax`;
+        }
+
+        function getConsentCookie() {
+            const cookies = document.cookie.split(';');
+            for (let cookie of cookies) {
+                const [name, value] = cookie.trim().split('=');
+                if (name === 'consent') return value;
+            }
+            return null;
+        }
+
+        function enableAds() {
+            // Ads are already loaded but this would trigger them to show
+            const ads = document.querySelectorAll('ins.adsbygoogle');
+            ads.forEach(ad => {
+                ad.style.display = 'block';
+            });
+            console.log('Ads enabled with user consent');
+        }
+
+        function disableAds() {
+            const ads = document.querySelectorAll('ins.adsbygoogle');
+            ads.forEach(ad => {
+                ad.style.display = 'none';
+            });
+            console.log('Ads disabled per user choice');
+        }
+
+        // Check for existing consent on page load
+        function checkExistingConsent() {
+            const consent = getConsentCookie();
+            if (consent === 'accepted') {
+                consentGiven = true;
+                adsEnabled = true;
+                hideConsentBanner();
+                enableAds();
+            } else if (consent === 'rejected') {
+                consentGiven = true;
+                adsEnabled = false;
+                hideConsentBanner();
+                disableAds();
+            }
+            // If no consent cookie, banner remains visible
+        }
+
         function createSnowflake() {
             const snowflake = document.createElement('div');
             snowflake.classList.add('snowflake');
@@ -443,7 +639,8 @@
 
         // Ad Blocker Detection
         function detectAdBlock() {
-            // Method 1: Check if AdSense ads are blocked
+            if (!adsEnabled) return; // Only detect if ads are enabled
+            
             const adElements = document.querySelectorAll('ins.adsbygoogle');
             let adBlockDetected = false;
             
@@ -459,27 +656,6 @@
                     }
                 }, 2000);
             }
-            
-            // Method 2: Try to load AdSense script (will fail if blocked)
-            const testAd = document.createElement('div');
-            testAd.className = 'adsbygoogle';
-            testAd.style.cssText = 'height: 1px; width: 1px; position: absolute; left: -9999px;';
-            document.body.appendChild(testAd);
-            
-            setTimeout(() => {
-                if (testAd.offsetHeight === 0) {
-                    showAdBlockPopup();
-                }
-                document.body.removeChild(testAd);
-            }, 1000);
-            
-            // Method 3: Check if Google Analytics is blocked (common with ad blockers)
-            const gaTest = document.createElement('script');
-            gaTest.src = 'https://www.google-analytics.com/analytics.js';
-            gaTest.onerror = function() {
-                showAdBlockPopup();
-            };
-            document.head.appendChild(gaTest);
         }
 
         function showAdBlockPopup() {
@@ -494,9 +670,14 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             createSnowflakes();
+            checkExistingConsent();
             
-            // Detect ad blocker after page loads
-            setTimeout(detectAdBlock, 1000);
+            // Detect ad blocker after page loads (only if ads are enabled)
+            setTimeout(() => {
+                if (adsEnabled) {
+                    detectAdBlock();
+                }
+            }, 1000);
             
             // Continue button event
             document.getElementById('continue-btn').addEventListener('click', hideAdBlockPopup);
